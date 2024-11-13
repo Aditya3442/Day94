@@ -1,0 +1,25 @@
+class Solution {
+    long low(int[] nums, int l, int h, int element) {
+        while(l<=h) {
+            int m=l+((h-l)/2);
+            if(nums[m] >= element) {
+                h= m-1;
+            }else{
+                l=m+1;
+            }
+        }
+        return l;
+    }
+
+    long countFairPairs(int[] nums, int lower, int upper) {
+        long ans = 0;
+        Arrays.sort(nums);
+        int n=nums.length;
+        for (int i = 0; i < nums.length; i++) {
+            long l=low(nums,i + 1,n- 1,lower - nums[i]);
+            long h=low(nums,i + 1,n- 1,upper - nums[i] + 1);
+            ans+=1*(h-l);
+        }
+        return ans;
+    }
+}
